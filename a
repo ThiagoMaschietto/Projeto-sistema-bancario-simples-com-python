@@ -1,0 +1,58 @@
+menu = """
+[1] Depositar
+[2] Sacar
+[3] Extrato
+[4] Sair
+
+"""
+
+saldo = 0
+limite = 0
+extratodeposito = []
+extratosaque = []
+numero_saques = 0
+LIMITE_SAQUES = 3
+contador = 0
+
+while True:
+    opcao = input(menu)
+
+    if opcao == "1":
+        limite = float(input("Digite o valor desejado para depositar:"))
+        if limite < 0:
+            break
+        saldo += limite
+        extratodeposito.append ("{:.2f}".format(limite))
+        contador += 1
+        limite = 0
+
+    elif opcao == "2":
+        if numero_saques == LIMITE_SAQUES:
+            print("Limite de saques diarios alcançado.") 
+        else:
+            limite = float(input("Digite o valor desejado para sacar:"))
+            if limite < 0:
+                break
+            if limite > 500:
+                print("Limite de R$ 500,00 por saque ultrapassado.")
+            elif limite > saldo:
+                print("Saldo Insuficiente.")
+            else:
+                numero_saques += 1
+                saldo -= limite
+                extratosaque.append ("{:.2f}".format(limite))
+                contador += 1
+                limite = 0
+    elif opcao == "3":
+        print("Depositos:")
+        for i in extratodeposito:
+            print("R$",i)
+        print("Saques:")
+        for i in extratosaque:
+            print("R$",i)
+        saldo = ("{:.2f}".format(saldo))
+        print("Saldo atual:",saldo)
+    elif opcao == "4":
+        break
+    else:
+        print("Selecione uma opção valida.")
